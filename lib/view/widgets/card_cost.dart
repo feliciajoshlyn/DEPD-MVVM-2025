@@ -41,34 +41,48 @@ class _CardCostState extends State<CardCost> {
         horizontal: 16,
       ),
       color: Colors.white,
-      child: ListTile(
-        title: Text(
-          style: TextStyle(
-            color: Colors.blue[800],
-            fontWeight: FontWeight.w700,
+
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          showModalBottomSheet(
+            context: context,
+            backgroundColor: Colors.transparent,
+            isScrollControlled: true,
+            builder: (context) {
+              return ShippingDetailSheet(cost: cost);
+            },
+          );
+        },
+        child: ListTile(
+          title: Text(
+            style: TextStyle(
+              color: Colors.blue[800],
+              fontWeight: FontWeight.w700,
+            ),
+            "${cost.name}: ${cost.service}",
           ),
-          "${cost.name}: ${cost.service}",
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              style: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+                "Biaya: ${rupiahMoneyFormatter(cost.cost)}",
               ),
-              "Biaya: ${rupiahMoneyFormatter(cost.cost)}",
-            ),
-            const SizedBox(height: 4),
-            Text(
-              style: TextStyle(color: Colors.green[800]),
-              "Estimasi sampai: ${formatEtd(cost.etd)}",
-            ),
-          ],
-        ),
-        leading: CircleAvatar(
-          backgroundColor: Colors.blue[50],
-          child: Icon(Icons.local_shipping, color: Colors.blue[800]),
+              const SizedBox(height: 4),
+              Text(
+                style: TextStyle(color: Colors.green[800]),
+                "Estimasi sampai: ${formatEtd(cost.etd)}",
+              ),
+            ],
+          ),
+          leading: CircleAvatar(
+            backgroundColor: Colors.blue[50],
+            child: Icon(Icons.local_shipping, color: Colors.blue[800]),
+          ),
         ),
       ),
     );

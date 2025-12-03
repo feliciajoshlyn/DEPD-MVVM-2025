@@ -137,7 +137,8 @@ class _HomePageState extends State<HomePage> {
 
                                   return DropdownButton<int>(
                                     isExpanded: true,
-                                    value: selectedProvinceOriginId, // Masih null saat awal
+                                    value:
+                                        selectedProvinceOriginId, // Masih null saat awal
                                     hint: const Text('Pilih provinsi'),
                                     items: provinces
                                         .map(
@@ -147,7 +148,8 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         )
                                         .toList(),
-                                    onChanged: (newId) { // Ketika user memilih provinsi baru, misalnya ID 1
+                                    onChanged: (newId) {
+                                      // Ketika user memilih provinsi baru, misalnya ID 1
                                       setState(() {
                                         selectedProvinceOriginId = newId;
                                         selectedCityOriginId =
@@ -155,9 +157,7 @@ class _HomePageState extends State<HomePage> {
                                       });
                                       // Jika ada ID provinsi yang dipilih, load daftar kota untuk provinsi tersebut
                                       if (newId != null) {
-                                        vm.getCityOriginList(
-                                          newId,
-                                        );
+                                        vm.getCityOriginList(newId);
                                       }
                                     },
                                   );
