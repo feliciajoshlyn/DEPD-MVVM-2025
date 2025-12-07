@@ -82,7 +82,7 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    const HomePage(), // Accessible because we imported pages.dart
+    const HomePage(), 
     const InternationalPage(),
     const FreePage(),
   ];

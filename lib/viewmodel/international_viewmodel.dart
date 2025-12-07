@@ -1,28 +1,21 @@
 import 'dart:async'; // For Debounce (Timer)
 import 'package:flutter/material.dart';
 
-// Models
-import 'package:depd_mvvm_2025/model/model.dart'; // Contains Province, City, InternationalDestination, InternationalCosts
+// models
+import 'package:depd_mvvm_2025/model/model.dart';
 
-// Responses
+// responses
 import 'package:depd_mvvm_2025/data/response/api_response.dart';
 import 'package:depd_mvvm_2025/data/response/status.dart';
 
-// Repositories
+// repositories
 import 'package:depd_mvvm_2025/repository/home_repository.dart';
 import 'package:depd_mvvm_2025/repository/international_repository.dart';
 
 class InternationalViewModel with ChangeNotifier {
-  // 1. We need HomeRepository for Origin (Indonesia)
   final _homeRepo = HomeRepository();
-  // 2. We need InternationalRepository for Destination & Cost
   final _intlRepo = InternationalRepository();
 
-  // ==========================
-  // SECTION 1: ORIGIN (INDONESIA)
-  // ==========================
-
-  // State: List Provinsi
   ApiResponse<List<Province>> provinceList = ApiResponse.notStarted();
 
   void setProvinceList(ApiResponse<List<Province>> response) {
@@ -40,7 +33,6 @@ class InternationalViewModel with ChangeNotifier {
     });
   }
 
-  // Cache & State: List Kota Asal
   final Map<int, List<City>> _cityCache = {};
   ApiResponse<List<City>> cityOriginList = ApiResponse.notStarted();
 
@@ -65,11 +57,7 @@ class InternationalViewModel with ChangeNotifier {
     });
   }
 
-  // ==========================
-  // SECTION 2: DESTINATION (INTERNATIONAL)
-  // ==========================
 
-  // State: List Negara Tujuan
   ApiResponse<List<Country>> destinationList = ApiResponse.notStarted();
   Timer? _debounce;
 
@@ -80,16 +68,13 @@ class InternationalViewModel with ChangeNotifier {
 
   // Direct Search Logic
   void onSearchCountry(String query) {
-    // If query is too short, clear list or do nothing
     if (query.length < 3) { 
-       // Optional: You can choose to not search if less than 3 chars to save API calls
-       // setDestinationList(ApiResponse.completed([]));
-       // return;
+       setDestinationList(ApiResponse.completed([]));
+       return;
     }
 
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     
-    // Wait 500ms after typing stops
     _debounce = Timer(const Duration(milliseconds: 500), () {
       _getDestinations(query);
     });
@@ -104,10 +89,6 @@ class InternationalViewModel with ChangeNotifier {
       setDestinationList(ApiResponse.error(error.toString()));
     });
   }
-
-  // ==========================
-  // SECTION 3: COST CALCULATION
-  // ==========================
 
   ApiResponse<List<InternationalCosts>> costList = ApiResponse.notStarted();
   bool isLoading = false;

@@ -28,19 +28,16 @@ class CardInternationalCost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      // 1. Exact Shape & Border as CardCost
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(color: Colors.blue[800]!),
       ),
-      // 2. Exact Margin
       margin: const EdgeInsetsDirectional.symmetric(
         vertical: 8,
         horizontal: 16,
       ),
       color: Colors.white,
       
-      // 3. Interaction Logic
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
