@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // menerima dari viewmodel
         ChangeNotifierProvider(create: (_) => HomeViewModel()),
         ChangeNotifierProvider(create: (_) => InternationalViewModel()),
       ],
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: Style.blue800,
           scaffoldBackgroundColor: Style.grey50,
+          // import Google Fonts Poppins
           textTheme: GoogleFonts.poppinsTextTheme( 
             Theme.of(context).textTheme,
           ).apply(

@@ -5,6 +5,7 @@ class ShippingDetailSheet extends StatelessWidget {
 
   const ShippingDetailSheet({super.key, required this.cost});
 
+  //format uang ke rupiah
   String rupiahMoneyFormatter(int? value) {
     if (value == null) return "Rp0,00";
     final formatter = NumberFormat.currency(
@@ -15,7 +16,7 @@ class ShippingDetailSheet extends StatelessWidget {
     return formatter.format(value);
   }
 
-  // Helper to format Estimation Time of Delivery (ETD)
+  //mengganti kata 'day' atau 'days' dengan 'hari'
   String formatEtd(String? etd) {
     if (etd == null || etd.isEmpty) return '-';
     return etd.replaceAll('day', 'hari').replaceAll('days', 'hari');
@@ -34,7 +35,6 @@ class ShippingDetailSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Grey handle bar for UI design
           Center(
             child: Container(
               width: 40,
@@ -57,7 +57,6 @@ class ShippingDetailSheet extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          // details
           _rowDetail("Service", cost.service ?? "-"),
           _rowDetail("Description", cost.description ?? "-"),
           const Divider(height: 24),
@@ -71,7 +70,7 @@ class ShippingDetailSheet extends StatelessWidget {
 
           const SizedBox(height: 24),
 
-          // Close Button
+// close button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
@@ -91,6 +90,7 @@ class ShippingDetailSheet extends StatelessWidget {
     );
   }
 
+// menggunakan ini untuk menghindari pengulangan kode (function)
   Widget _rowDetail(
     String label,
     String value, {
