@@ -11,8 +11,6 @@ class InternationalRepository {
     String query = '',
   }) async {
     try {
-      // Construct the URL with the search parameter
-      // Note: You might need to handle URL encoding for spaces
       String endpoint = 'destination/international-destination';
       if (query.isNotEmpty) {
         endpoint += '?search=$query';
@@ -35,13 +33,12 @@ class InternationalRepository {
   }
 
   Future<List<InternationalCosts>> checkInternationalCosts({
-    required int originCityId,      // 'origin' from request
-    required int destinationCountryId, // 'destination' from request
-    required int weight,            // 'weight' from request
-    required String courier,        // 'courier' from request
+    required int originCityId,      
+    required int destinationCountryId, 
+    required int weight,            
+    required String courier,        
   }) async {
     try {
-      // 1. Prepare the Body
       final body = {
         "origin": originCityId.toString(),
         "destination": destinationCountryId.toString(),
@@ -49,16 +46,13 @@ class InternationalRepository {
         "courier": courier,
       };
 
-      // 2. POST Request
       final response = await _apiServices.postApiResponse(
         'calculate/international-cost', 
         body,
       );
 
-      // 3. Parse 'meta' (Validation)
       final meta = response['meta'];
       if (meta != null) {
-        // According to your structure, 'code' holds the success status (usually 200)
         final int code = meta['code'] ?? 0;
         
         if (code != 200) {
@@ -66,13 +60,10 @@ class InternationalRepository {
         }
       }
 
-      // 4. Parse 'data' (The List)
       final data = response['data'];
       
-      // If data is null or not a list, return empty
       if (data is! List) return [];
 
-      // 5. Map to Model
       return data.map((e) => InternationalCosts.fromJson(e)).toList();
 
     } catch (e) {

@@ -29,9 +29,7 @@ class InternationalCosts extends Equatable {
     service: json['service'] as String?,
     description: json['description'] as String?,
     currency: json['currency'] as String?,
-    // Using (json['x'] as num?)?.toDouble() is safer than 'as double?' 
-    // because API might return an int (e.g. 5000) which crashes 'as double'.
-    cost: (json['cost'] as num?)?.toDouble(),
+    cost: (json['cost'] as num?)?.toDouble(), //agar lebih aman konversinya
     etd: json['etd'] as String?,
     currencyUpdatedAt: json['currency_updated_at'] as String?,
     currencyValue: (json['currency_value'] as num?)?.toDouble(),
